@@ -1,0 +1,24 @@
+
+class FunCall:
+
+    name ="amu"
+    no = 1242342
+    def fun1(self):
+        print " im fun1"
+
+    def fun2(self):
+        print "im fun2"
+        self.fun1();
+
+    def add(self,x,y):
+        print x+y
+
+    def callAdd(self):
+        self.add(4,5)
+        print "my name is ", self.name ," and im happy"
+        print " my name and no are : %s %d" % (self.name, self.no)
+
+
+x = FunCall();
+x.fun1();
+x.callAdd();
