@@ -1,0 +1,37 @@
+
+  docker pull redis
+   docker run -d --name redis-assg2 redis
+
+   docker run -it --link redis-assg2:redis --name redisclient1 busybox
+
+    docker run --name mysql-assg2 -e MYSQL_ROOT_PASSWORD='root' -d mysql/mysql-server:latest
+
+   docker build -t cmpe273assg2_client1 .
+
+   docker run --name assg2_client1 --link mysql-assg2:mysql -d -p 5000:5000 cmpe273assg2_client1
+
+docker run --name assg2_client2 --link mysql-assg2:mysql -d -p 5001:5000 cmpe273assg2_client1
+
+   docker run --name assg2_client2 --link mysql-assg2:mysql --link redis-assg2:redis -d -p 5001:5001 cmpe273assg2
+
+
+
+
+
+steps :
+
+run mysql on diff container
+
+run redis on diff container
+
+build ur app and run it ..while running link it to mysql and redis
+
+
+# to set environemtn avrable in docker run and read htat in python
+-e is correct e.g., docker run --rm -e ENV=1 python python -c 'import os; print(os.environ["ENV"])'
+
+#get inside running container
+docker exec -it 66a9f5a52e7d bash
+
+
+$ docker run --name some-mysql -v /my/own/datadir:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw -d mysql:tag

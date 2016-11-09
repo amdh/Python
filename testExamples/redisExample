@@ -1,0 +1,13 @@
+import redis
+
+pool = redis.ConnectionPool(host='redis', port=6379, db=0)
+r = redis.Redis(connection_pool=pool)
+
+
+r.set('foo','bar')
+print r.get('foo')
+
+r.set('ms_from','sjsu')
+r.set('ms_in','se')
+
+print r.get('ms_in')
