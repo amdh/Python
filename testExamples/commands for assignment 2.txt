@@ -2,6 +2,8 @@
   docker pull redis
    docker run -d --name redis-assg2 redis
 
+   docker run -d -p 6379:6379 --name redis_assign2 redis
+
    docker run -it --link redis-assg2:redis --name redisclient1 busybox
 
     docker run --name mysql-assg2 -e MYSQL_ROOT_PASSWORD='root' -d mysql/mysql-server:latest
@@ -12,8 +14,8 @@
 
 docker run --name assg2_client2 --link mysql-assg2:mysql -d -p 5001:5000 cmpe273assg2_client1
 
-   docker run --name assg2_client2 --link mysql-assg2:mysql --link redis-assg2:redis -d -p 5001:5001 cmpe273assg2
-
+   docker run --name assignment2_client1 --link mysql-assg2:mysql -v /my/own/datadir:/var/lib/mysql --link redis-assg2:redis
+    -d -p 3000:5000 cmpe273_assignment2_webapp
 
 
 
@@ -33,5 +35,18 @@ build ur app and run it ..while running link it to mysql and redis
 #get inside running container
 docker exec -it 66a9f5a52e7d bash
 
+redis-cli opens redis in redis docker
+
 
 $ docker run --name some-mysql -v /my/own/datadir:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw -d mysql:tag
+
+def run_server(dom):
+        _run_on_start("%s" % dom)
+        app.run(debug=True, use_reloader=False)
+
+if __name__ == '__main__':
+    if len(sys.argv) < 2:
+        raise Exception("Must provide domain for application execution.")
+    else:
+        DOM = sys.argv[1]
+        run_server(DOM)
