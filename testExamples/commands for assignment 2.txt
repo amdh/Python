@@ -14,8 +14,14 @@
 
 docker run --name assg2_client2 --link mysql-assg2:mysql -d -p 5001:5000 cmpe273assg2_client1
 
-   docker run --name assignment2_client1 --link mysql-assg2:mysql -v /my/own/datadir:/var/lib/mysql --link redis-assg2:redis
-    -d -p 3000:5000 cmpe273_assignment2_webapp
+   docker run --name web-app1-client1 --link mysql-assg2:mysql -v /my/own/datadir:/var/lib/mysql --link redis_assign2:redis \
+    -e WEB_HOST="192.168.99.100" -e WEB_PORT="5000" -d -p  3000:5000 cmpe273_assignment2_webapp
+
+    docker run \
+    --link mysql-assg2:mysql -v /my/own/datadir:/var/lib/mysql \
+    --link redis_assign2:redis \
+    -e WEB_HOST="192.168.99.100" -e WEB_PORT="3002" \
+    -d -p  3002:5000 amz
 
 
 
@@ -50,3 +56,8 @@ if __name__ == '__main__':
     else:
         DOM = sys.argv[1]
         run_server(DOM)
+
+
+ # forward runner
+ docker run --name sample-proxy-server -d -p 5555:5000
+ -e WEB_HOST="192.168.99.100" -e WEB_PORT="5000" sample-proxy
