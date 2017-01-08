@@ -87,6 +87,8 @@ class HashRing(object):
                     self._sorted_keys.append(key)
 
         self._sorted_keys.sort()
+        print self._sorted_keys
+        print self.ring
 
     def get_node(self, string_key):
         """Given a string key a corresponding node in the hash ring is returned.
@@ -111,7 +113,7 @@ class HashRing(object):
 
         nodes = self._sorted_keys
         pos = bisect(nodes, key)
-
+        #print pos
         if pos == len(nodes):
             return 0
         else:

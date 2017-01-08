@@ -58,6 +58,7 @@ class TestRing(object):
             n = ring.hash(k)
             counts[n] += 1
 
+
         assert 3 == len(counts)
         assert 10 <= counts[self.ip1]
         assert 10 <= counts[self.ip2]

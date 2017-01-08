@@ -63,3 +63,9 @@ class Ring(object):
 
 ring = Ring()
 
+ring.add('5001')
+ring.add('5002')
+ring.add('5003')
+
+print ring.hash(str(101))
+

@@ -1,27 +1,12 @@
-# _doc_ = """
-'''
-Rendezvous hashing based ring of nodes.
-Uses murmur3 to convert key to a 32 bit number and uses the weighing scheme
-proposed in the original white paper that introduced Rendezvous hashing.
-
-"""
-'''
-
 import mmh3
 import socket
 import struct
 
-'''
-3 possibilities
-*only ip 127.0.0.1
-*only port 5000
-*ip and port 127.0.0.1:5000
-'''
-
 
 def ip2long(ip):
     """Convert an IP string to long."""
-    return long(''.join(e for e in ip if e.isdigit()))
+    packedIP = socket.inet_aton(ip)
+    return struct.unpack("!L", packedIP)[0]
 
 
 def murmur(key):
@@ -31,24 +16,21 @@ def murmur(key):
 
 def weight(node, key):
     """Return the weight for the key on node.
-
     Uses the weighing algorithm as prescibed in the original HRW white paper.
-
     @params:
         node : 32 bit signed int representing IP of the node.
         key : string to be hashed.
-
     """
     a = 1103515245
     b = 12345
     hash = murmur(key)
-    return (a * ((a * node + b) ^ hash) + b) % (2 ^ 31)
+    #print hash
+    return (a * ((a * node + b) ^ hash) + b) % (2^31)
 
 
 class Ring(object):
     """A ring of nodes supporting rendezvous hashing based node selection."""
-
-    def _init_(self, nodes=None):
+    def __init__(self, nodes=None):
         nodes = nodes or {}
         self._nodes = set(nodes)
 
@@ -68,6 +50,7 @@ class Ring(object):
         for node in self._nodes:
             n = ip2long(node)
             w = weight(n, key)
+            #print w
             weights.append((w, node))
 
         _, node = max(weights)
