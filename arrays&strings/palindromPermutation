@@ -1,0 +1,45 @@
+# only 2 cases if string is even and all letters are evenly counted then yes
+# only 1 character is odd and rest are even then yess
+#not case sensitive
+
+
+# str is a permutaiton of palidron or not.
+#str is a palidrom if its sme forwards and backwards
+def check(str):
+    str = str.lower()
+    #find the palidrom of this string
+    #is a palindrome xists then its a permutation of it.
+    cntstr = {}
+    for i in str:
+        if i == ' ':
+            continue
+        if i in cntstr.keys():
+            cntstr[i]+=1
+        else:
+            cntstr[i] = 1
+
+    print(cntstr)
+    oddcnt = 0
+    if len(str)%2 == 0:
+        if all(value%2 == 0 for value in cntstr.values()) == True:
+            print('yes!!')
+    else:
+        for i,v in cntstr.items():
+            if v%2 != 0:
+                oddcnt +=1
+
+        print(oddcnt)
+        if oddcnt == 1:
+            print("string is permutation of palindrom")
+        else:
+            print('NOOOOOOOOOOOO')
+
+"act o tca"
+check('tact coa')
+check('anna')
+check('civiC')
+check('racecar')
+check('mom')
+
+check('Kilometers ')
+check('asdkdos')
